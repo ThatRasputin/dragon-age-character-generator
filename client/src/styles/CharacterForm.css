@@ -1,0 +1,286 @@
+/* CharacterForm.css */
+:root {
+  /* Dragon Age inspired color palette */
+  --da-red: #8C1919;
+  --da-dark-red: #5C0000;
+  --da-brown: #3D2B1F;
+  --da-light-brown: #9A8478;
+  --da-grey: #4A4A4A;
+  --da-light-grey: #D3D3D3;
+  --da-black: #1E1E1E;
+  --da-white: #F5F5F5;
+  --da-accent: #B87333;
+}
+
+body {
+  font-family: 'Trajan Pro', 'Cinzel', serif;
+  line-height: 1.6;
+  color: var(--da-black);
+  background-color: var(--da-light-grey);
+  max-width: 95vw;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+h1, h2, h3, h4 {
+  color: var(--da-red);
+}
+
+/* Form styles */
+form {
+  background-color: var(--da-white);
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  border: 1px solid var(--da-grey);
+}
+
+/* List Styles */
+ul {
+  list-style-type: none;
+  padding: 0 10px;
+}
+
+li {
+  margin-bottom: 5px;
+}
+
+/* Main layout */
+.main-layout {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 20px;
+}
+
+.character-info {
+  grid-column: 1 / 2;
+  grid-row: 1 / span 2;
+  display: grid;
+  grid-template-rows: auto auto;
+  gap: 20px;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+/* Character Summary and Abilities */
+.character-summary,
+.abilities-display {
+  background-color: var(--da-white);
+  padding: 15px;
+  border-radius: 5px;
+  border: 1px solid var(--da-grey);
+}
+
+.abilities-list {
+  display: grid;
+  grid-template-columns: auto;
+  gap: 10px;
+}
+
+.ability-item {
+  background-color: var(--da-light-grey);
+  padding: 5px 10px;
+  border-radius: 3px;
+  border: 1px solid var(--da-grey);
+  display: flex;
+  justify-content: space-between;
+  width: 160px;
+}
+
+.ability-name {
+  font-weight: bold;
+  color: var(--da-brown);
+}
+
+.ability-value {
+  font-size: 1.2em;
+  color: var(--da-red);
+  margin-left: 10px;
+}
+
+/* Tabs */
+.tab-navigation {
+  grid-column: 2 / 3;
+  grid-row: 1 / 2;
+  display: flex;
+  justify-content: flex-start;
+  gap: 10px;
+  background-color: var(--da-white);
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.tab-navigation button {
+  background-color: var(--da-light-grey);
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 10px 20px;
+  transition: background-color 0.3s, color 0.3s;
+  font-size: 17px;
+  border-radius: 5px;
+  color: var(--da-brown);
+}
+
+.tab-navigation button:hover {
+  background-color: var(--da-light-brown);
+  color: var(--da-white);
+}
+
+.tab-navigation button.active {
+  background-color: var(--da-brown);
+  color: var(--da-white);
+}
+
+/* Tab content */
+.tab-content {
+  grid-column: 2 / 3;
+  grid-row: 2 / 3;
+  padding: 20px;
+  background-color: var(--da-white);
+  border: 1px solid var(--da-brown);
+  border-radius: 5px;
+  margin-top: 20px;
+}
+
+/* Warning message style */
+.warning {
+  color: var(--da-white);
+  font-weight: bold;
+  padding: 10px;
+  margin-top: 10px;
+  background-color: var(--da-red);
+  border: 1px solid var(--da-dark-red);
+  border-radius: 4px;
+}
+
+/* Biography tab styles */
+.biography-tab input {
+  width: 100%;
+  max-width: 300px;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid var(--da-grey);
+  border-radius: 4px;
+}
+
+.biography-tab label {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--da-brown);
+}
+
+/* Select dropdown styles */
+select {
+  width: 100%;
+  max-width: 300px;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid var(--da-grey);
+  border-radius: 4px;
+  background-color: var(--da-light-grey);
+  color: var(--da-black);
+}
+
+/* Focus options styles */
+.focus-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.focus-option {
+  display: flex;
+  align-items: center;
+}
+
+.focus-option input[type="radio"] {
+  margin-right: 10px;
+}
+
+/* Chosen item display styles */
+.chosen-item {
+  background-color: var(--da-light-grey);
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+.chosen-label {
+  font-weight: bold;
+  color: var(--da-brown);
+}
+
+.chosen-value {
+  color: var(--da-red);
+  margin-left: 5px;
+}
+
+.not-chosen {
+  color: var(--da-grey);
+  font-style: italic;
+}
+
+/* Settings gear and modal styles */
+.settings-gear {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: var(--da-white);
+  padding: 20px;
+  border-radius: 5px;
+  max-width: 500px;
+  width: 100%;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .main-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .character-info {
+    grid-column: 1 / 2;
+    grid-row: auto;
+  }
+
+  .tab-navigation {
+    grid-column: 1 / 2;
+    grid-row: auto;
+    flex-direction: column;
+  }
+
+  .tab-navigation button {
+    width: 100%;
+    margin-bottom: 5px;
+  }
+
+  .tab-content {
+    grid-column: 1 / 2;
+    grid-row: auto;
+  }
+
+  .abilities-list {
+    grid-template-columns: 1fr;
+  }
+}
