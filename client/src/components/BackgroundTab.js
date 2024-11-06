@@ -1,10 +1,47 @@
-import React from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { backgrounds } from '../data/backgroundData';
 
 function BackgroundTab({ character, handleInputChange, incompatibleWarning }) {
-  const isSelectOption = (text) => /^Select\s\w+$/.test(text);
+  const [backgroundRolls, setBackgroundRolls] = useState([]);
+
+  const selectedBackground = backgrounds.find(bg => bg.name === character.background);
+
+  const rollDice = () => Math.floor(Math.random() * 6) + 1;
+
+  const getRollTableResult = useCallback((roll) => {
+    if (!selectedBackground) return null;
+    return selectedBackground.rollTable.find(item => item.roll === roll.toString()) || null;
+  }, [selectedBackground]);
+
+  const performBackgroundRolls = useCallback(() => {
+    let rolls = [];
+    let attempts = 0;
+    const maxAttempts = 20; // Prevent infinite loop
+
+    while (rolls.length < 2 && attempts < maxAttempts) {
+      const roll = rollDice() + rollDice();
+      const result = getRollTableResult(roll);
+      if (result && !rolls.some(r => r.result === result)) {
+        rolls.push({ roll, result });
+      }
+      attempts++;
+    }
+
+    // If we couldn't get two unique results, fill with placeholder
+    while (rolls.length < 2) {
+      rolls.push({ roll: 0, result: { result: 'No result available' } });
+    }
+
+    setBackgroundRolls(rolls);
+  }, [getRollTableResult]);
+
+  useEffect(() => {
+    if (selectedBackground) {
+      performBackgroundRolls();
+    }
+  }, [selectedBackground, performBackgroundRolls]);
+
   const getOptionClass = (option, allowedOptions) => {
-    if (isSelectOption(option)) return '';
     if (!allowedOptions || allowedOptions.length === 0) return '';
     return allowedOptions.includes(option) ? '🟢 ' : '🔴 ';
   };
@@ -22,19 +59,32 @@ function BackgroundTab({ character, handleInputChange, incompatibleWarning }) {
         ))}
       </select>
       {incompatibleWarning && <p className="warning">{incompatibleWarning}</p>}
-      {character.background && (
+      {selectedBackground && (
         <div>
           <h3>Playing a {character.background}</h3>
-          <p>{backgrounds.find(bg => bg.name === character.background).description}</p>
+          <p>{selectedBackground.description}</p>
+          {selectedBackground.races && selectedBackground.races.length > 1 && (
+            <div>
+              <h4>Choose Your Race</h4>
+              <select name="race" value={character.race} onChange={handleInputChange}>
+                <option value="">Select Race</option>
+                {selectedBackground.races.map((race, index) => (
+                  <option key={index} value={race}>
+                    {race}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
           <h4>Ability Adjustments:</h4>
           <ul>
-            {Object.entries(backgrounds.find(bg => bg.name === character.background).abilityAdjustments).map(([ability, adjustment]) => (
+            {Object.entries(selectedBackground.abilityAdjustments).map(([ability, adjustment]) => (
               <li key={ability}>+{adjustment} to {ability.charAt(0).toUpperCase() + ability.slice(1)}</li>
             ))}
           </ul>
           <h4>Focus Options:</h4>
           <div className="focus-options">
-            {backgrounds.find(bg => bg.name === character.background).focusOptions.map((focus, index) => (
+            {selectedBackground.focusOptions.map((focus, index) => (
               <div key={index} className="focus-option">
                 <input
                   type="radio"
@@ -54,6 +104,13 @@ function BackgroundTab({ character, handleInputChange, incompatibleWarning }) {
               <li key={index}>{language}</li>
             ))}
           </ul>
+          <h4>Roll Table Results:</h4>
+          {backgroundRolls.map((roll, index) => (
+            <p key={index}>
+              Roll {index + 1}: {roll.roll} - {roll.result ? roll.result.result : 'No result available'}
+            </p>
+          ))}
+          <button onClick={performBackgroundRolls}>Reroll Background</button>
         </div>
       )}
     </div>

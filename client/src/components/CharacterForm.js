@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { backgrounds } from '../data/backgroundData';
-import { getAllClassNames } from '../data/classData';
-//import { getRaceByName } from '../data/raceData';
 import CharacterSummary from './CharacterSummary';
 import AbilitiesDisplay from './AbilitiesDisplay';
 import BiographyTab from './BiographyTab';
@@ -9,7 +7,6 @@ import BackgroundTab from './BackgroundTab';
 import ClassTab from './ClassTab';
 import ReviewTab from './ReviewTab';
 import TabNavigation from './TabNavigation';
-import SettingsModal from './SettingsModal';
 import '../styles/CharacterForm.css';
 
 function CharacterForm() {
@@ -20,6 +17,7 @@ function CharacterForm() {
     genderIdentity: '',
     genderPresentation: '',
     background: '',
+    race: '',
     class: '',
     focus: '',
     abilities: {
@@ -34,10 +32,8 @@ function CharacterForm() {
     },
     focuses: [],
     languages: [],
-    healthRollOverride: null,
   });
   const [incompatibleWarning, setIncompatibleWarning] = useState('');
-  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
   const updateAbilities = useCallback(() => {
     const newAbilities = {
@@ -82,7 +78,7 @@ function CharacterForm() {
     const { name, value } = event.target;
     setCharacter(prevState => {
       let newState = { ...prevState, [name]: value };
-
+  
       if (name === 'background') {
         const selectedBackground = backgrounds.find(bg => bg.name === value);
         if (selectedBackground) {
@@ -92,10 +88,11 @@ function CharacterForm() {
             focus: '',
             focuses: selectedBackground.focuses || [],
             languages: selectedBackground.languages || [],
+            race: selectedBackground.races.length === 1 ? selectedBackground.races[0] : '',
           };
         }
       }
-
+  
       return newState;
     });
   };
@@ -110,7 +107,6 @@ function CharacterForm() {
       <div className="character-info">
         <CharacterSummary character={character} />
         <AbilitiesDisplay abilities={character.abilities} />
-        <button className="settings-gear" onClick={() => setIsSettingsOpen(true)}>⚙️</button>
       </div>
       <TabNavigation activeTab={activeTab} setActiveTab={setActiveTab} />
       <div className="tab-content">
@@ -136,12 +132,6 @@ function CharacterForm() {
         )}
         {activeTab === 'review' && <ReviewTab character={character} />}
       </div>
-      <SettingsModal 
-        isOpen={isSettingsOpen}
-        onClose={() => setIsSettingsOpen(false)}
-        character={character}
-        setCharacter={setCharacter}
-      />
     </form>
   );
 }

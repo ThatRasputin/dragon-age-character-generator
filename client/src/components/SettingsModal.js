@@ -1,4 +1,3 @@
-// SettingsModal.js
 import React from 'react';
 
 function SettingsModal({ isOpen, onClose, character, setCharacter }) {
