@@ -6,6 +6,7 @@ export const focusData = {
     'Historical Lore': { ability: 'Cunning' },
     'Might': { ability: 'Strength' },
     'Persuasion': { ability: 'Communication' },
+    'Riding': { ability: 'Dexterity' },
     'Running': { ability: 'Constitution' },
     'Self-Discipline': { ability: 'Willpower' },
     'Stamina': { ability: 'Constitution' },
