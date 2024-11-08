@@ -1,5 +1,6 @@
 import React from 'react';
 import CharacterForm from './components/CharacterForm';
+import './styles/App.css';
 
 function App() {
   return (

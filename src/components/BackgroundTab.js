@@ -1,10 +1,15 @@
 import React from 'react';
 import { backgrounds } from '../data/backgroundData';
 
-function BackgroundTab({ character, handleInputChange, handleFocusChange, incompatibleWarning, backgroundBenefits, focusData }) {
-  console.log('BackgroundTab rendered');
-  console.log('backgroundBenefits:', backgroundBenefits);
-  console.log('focusData:', focusData);
+function BackgroundTab({ 
+  character, 
+  handleInputChange, 
+  handleFocusChange, 
+  incompatibleWarning, 
+  backgroundBenefits, 
+  focusData,
+  availableRaces
+}) {
   const backgroundOptions = backgrounds.map(bg => bg.name);
 
   return (
@@ -25,15 +30,32 @@ function BackgroundTab({ character, handleInputChange, handleFocusChange, incomp
         </select>
       </div>
 
+      {availableRaces.length > 1 && (
+        <div className="form-group">
+          <label htmlFor="race">Choose a race:</label>
+          <select
+            id="race"
+            name="race"
+            value={character.race}
+            onChange={handleInputChange}
+          >
+            <option value="">Select a race</option>
+            {availableRaces.map(race => (
+              <option key={race} value={race}>{race}</option>
+            ))}
+          </select>
+        </div>
+      )}
+
       {character.background && backgroundBenefits && (
         <div className="background-details">
           <h3>Background Details</h3>
           <p>{backgrounds.find(bg => bg.name === character.background).description}</p>
-          
+
           <h4>Ability Adjustments</h4>
           <ul>
             {Object.entries(backgroundBenefits.abilityAdjustments).map(([ability, adjustment]) => (
-              <li key={ability}>{ability}: +{adjustment}</li>
+              <li key={ability}>{ability}: {adjustment}</li>
             ))}
           </ul>
 
@@ -51,7 +73,7 @@ function BackgroundTab({ character, handleInputChange, handleFocusChange, incomp
                     checked={character.focus === focusName}
                     onChange={(e) => handleFocusChange(e.target.value)}
                   />
-                  <label htmlFor={`focus-${index}`}>{`${focusDetails.ability} (${focusName})`}</label>
+                  <label htmlFor={`focus-${index}`}>{focusDetails.ability}: {focusName}</label>
                 </div>
               ) : null;
             })}
@@ -91,7 +113,9 @@ function BackgroundTab({ character, handleInputChange, handleFocusChange, incomp
         </div>
       )}
 
-      {incompatibleWarning && <p className="warning">{incompatibleWarning}</p>}
+      {incompatibleWarning && (
+        <p className="warning">{incompatibleWarning}</p>
+      )}
     </div>
   );
 }

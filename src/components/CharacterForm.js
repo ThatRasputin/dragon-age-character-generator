@@ -7,7 +7,7 @@ import BiographyTab from './BiographyTab';
 import BackgroundTab from './BackgroundTab';
 import ClassTab from './ClassTab';
 import ReviewTab from './ReviewTab';
-import TabNavigation from './TabNavigation';
+import TabNavigation from './TabNav';
 import '../styles/CharacterForm.css';
 
 function CharacterForm() {
@@ -36,6 +36,7 @@ function CharacterForm() {
   });
   const [incompatibleWarning, setIncompatibleWarning] = useState('');
   const [backgroundBenefits, setBackgroundBenefits] = useState(null);
+  const [availableRaces, setAvailableRaces] = useState([]);
 
   const updateAbilities = useCallback(() => {
     const newAbilities = {
@@ -65,7 +66,7 @@ function CharacterForm() {
 
   useEffect(() => {
     if (character.background) {
-      const benefits = getBackgroundBenefits(character.background);
+      const benefits = getBackgroundBenefits(character.background, character.race);
       setBackgroundBenefits(benefits);
 
       if (character.class && benefits && !benefits.allowedClasses.includes(character.class)) {
@@ -73,11 +74,19 @@ function CharacterForm() {
       } else {
         setIncompatibleWarning('');
       }
+
+      const selectedBackground = backgrounds.find(bg => bg.name === character.background);
+      if (selectedBackground && selectedBackground.races) {
+        setAvailableRaces(selectedBackground.races);
+      } else {
+        setAvailableRaces([]);
+      }
     } else {
       setBackgroundBenefits(null);
       setIncompatibleWarning('');
+      setAvailableRaces([]);
     }
-  }, [character.background, character.class]);
+  }, [character.background, character.class, character.race]);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -94,6 +103,21 @@ function CharacterForm() {
             focuses: selectedBackground.focuses || [],
             languages: selectedBackground.languages || [],
             race: selectedBackground.races && selectedBackground.races.length === 1 ? selectedBackground.races[0] : '',
+          };
+        }
+      }
+
+      if (name === 'race') {
+        // Reset background if the new race is not compatible with the current background
+        const currentBackground = backgrounds.find(bg => bg.name === newState.background);
+        if (currentBackground && !currentBackground.races.includes(value)) {
+          newState = {
+            ...newState,
+            background: '',
+            class: '',
+            focus: '',
+            focuses: [],
+            languages: [],
           };
         }
       }
@@ -123,16 +147,17 @@ function CharacterForm() {
       <div className="main-content">
         <TabNavigation activeTab={activeTab} setActiveTab={setActiveTab} />
         <div className="tab-content">
-        {activeTab === 'background' && (
-          <BackgroundTab 
-            character={character} 
-            handleInputChange={handleInputChange}
-            handleFocusChange={handleFocusChange}
-            incompatibleWarning={incompatibleWarning}
-            backgroundBenefits={backgroundBenefits}
-            focusData={focusData}
-          />
-        )}
+          {activeTab === 'background' && (
+            <BackgroundTab 
+              character={character} 
+              handleInputChange={handleInputChange}
+              handleFocusChange={handleFocusChange}
+              incompatibleWarning={incompatibleWarning}
+              backgroundBenefits={backgroundBenefits}
+              focusData={focusData}
+              availableRaces={availableRaces}
+            />
+          )}
           {activeTab === 'class' && (
             <ClassTab 
               character={character} 

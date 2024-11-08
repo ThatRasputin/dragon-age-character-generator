@@ -12,39 +12,48 @@ export const backgrounds = [
         allowedClasses: ["Rogue", "Warrior"],
         races: ["Human"],
         rollTable: [
-          { 
-            roll: "2", 
-            result: "+1 Dexterity" 
-          },
-          { 
-            roll: "3-4", 
-            result: getFocusData("Running")
-          },
-          { 
-            roll: "5", 
-            result: getFocusData("Historical Lore")
-          },
-          { 
-            roll: "6", 
-            result: getFocusData("Tracking") 
-          },
-          { 
-            roll: "7-8", 
-            result: "+1 Strength" 
-          },
-          { 
-            roll: "9", 
-            result: getFocusData("Brawling") 
-          },
-          { 
-            roll: "10-11", 
-            result: getFocusData("Courage") 
-          },
-          { 
-            roll: "12", 
-            result: "+1 Perception" 
-          }
+          { roll: "2", result: "+1 Dexterity" },
+          { roll: "3-4", result: getFocusData("Stamina") },
+          { roll: "5", result: getFocusData("Climbing") },
+          { roll: "6", result: getFocusData("Tracking") },
+          { roll: "7-8", result: "+1 Strength" },
+          { roll: "9", result: getFocusData("Brawling") },
+          { roll: "10-11", result: getFocusData("Courage") },
+          { roll: "12", result: "+1 Perception" }
         ]
+      },
+    {
+        name: "Apostate",
+        description: "An apostate is a mage who lives outside the Circle of Magi and is not under the control of the Chantry. Apostates are considered dangerous and are hunted by templars. Some apostates are hedge mages, untrained or self-taught mages who live in the wilderness. Others are maleficarum, mages who use forbidden blood magic.",
+        abilityAdjustments: {
+          willpower: 1,
+        },
+        focusOptions: ['Natural Lore','Self-Discipline'],
+        languages: ["Trade Tongue"],
+        allowedClasses: ["Mage"],
+        races: ["Elf", "Human"],
+        rollTable: {
+          Elf: [
+            { roll: "2", result: "+1 Cunning" },
+            { roll: "3-4", result: "Speak Elven" },
+            { roll: "5", result: getFocusData("Cultural Lore") },
+            { roll: "6", result: getFocusData("Self-Discipline") },
+            { roll: "7-8", result: "+1 Magic" },
+            { roll: "9", result: getFocusData("Stealth") },
+            { roll: "10-11", result: "+1 Dexterity" },
+            { roll: "12", result: "Weapon Group: Bows" }
+          ],
+          Human: [
+            { roll: "2", result: "+1 Dexterity" },
+            { roll: "3-4", result: getFocusData("Stamina") },
+            { roll: "5", result: getFocusData("Climbing") },
+            { roll: "6", result: getFocusData("Tracking") },
+            { roll: "7-8", result: "+1 Strength" },
+            { roll: "9", result: getFocusData("Brawling") },
+            { roll: "10-11", result: getFocusData("Courage") },
+            { roll: "12", result: "+1 Perception" }
+          ]
+        }
       },
     {
         name: "Seheron Convert",
@@ -60,38 +69,14 @@ export const backgrounds = [
         allowedClasses: ["Rogue", "Warrior"],
         races: ["Elf", "Human"],
         rollTable: [
-          { 
-            roll: "2", 
-            result: "+1 Perception" 
-          },
-          { 
-            roll: "3-4", 
-            result: getFocusData("Historical Lore")
-          },
-          { 
-            roll: "5", 
-            result: getFocusData("Might")
-          },
-          { 
-            roll: "6", 
-            result: getFocusData("Stamina")
-          },
-          { 
-            roll: "7-8", 
-            result: "+1 Cunning" 
-          },
-          { 
-            roll: "9", 
-            result: getFocusData("Persuasion")
-          },
-          { 
-            roll: "10-11", 
-            result: getFocusData("Empathy")
-          },
-          { 
-            roll: "12", 
-            result: "+1 Strength" 
-          }
+          { roll: "2", result: "+1 Perception" },
+          { roll: "3-4", result: getFocusData("Qun") },
+          { roll: "5", result: getFocusData("Self-Discipline") },
+          { roll: "6", result: getFocusData("Persuasion") },
+          { roll: "7-8", result: "+1 Strength" },
+          { roll: "9", result: getFocusData("Might") },
+          { roll: "10-11", result: getFocusData("Stamina") },
+          { roll: "12", result: "+1 Willpower" }
         ]
       },
     {
@@ -108,41 +93,16 @@ export const backgrounds = [
       allowedClasses: ["Mage"],
       races: ["Human"],
       rollTable: [
-        { 
-          roll: "2", 
-          result: "+1 Cunning" 
-        },
-        { 
-          roll: "3-4", 
-          result: "Focus: Dexterity (Riding)" 
-        },
-        { 
-          roll: "5", 
-          result: "Focus: Cunning (Heraldry)" 
-        },
-        { 
-            roll: "6", 
-            result: "Focus: Magic (Arcane Lance)" 
-        },
-        { 
-          roll: "7-8", 
-          result: "+1 Communication" 
-        },
-        { 
-          roll: "9", 
-          result: "Focus: Cunning (Historical Lore)" 
-        },
-        { 
-            roll: "10-11", 
-            result: "Focus: Communication (Etiquette)" 
-        },
-        { 
-          roll: "12", 
-          result: "+1 Willpower" 
-        }
+        { roll: "2", result: "+1 Cunning" },
+        { roll: "3-4", result: getFocusData("Riding") },
+        { roll: "5", result: getFocusData("Heraldry") },
+        { roll: "6", result: getFocusData("Arcane Lance") },
+        { roll: "7-8", result: "+1 Communication" },
+        { roll: "9", result: getFocusData("Historical Lore") },
+        { roll: "10-11", result: getFocusData("Etiquette") },
+        { roll: "12", result: "+1 Willpower" }
       ]
     }
-    // Add other backgrounds here
   ];
   
   export const getBackgroundByName = (name) => {
@@ -153,23 +113,21 @@ export const backgrounds = [
     return backgrounds.map(bg => bg.name);
   };
   
-  export const getBackgroundBenefits = (backgroundName) => {
+  export const getBackgroundBenefits = (backgroundName, race) => {
     const background = getBackgroundByName(backgroundName);
     if (!background) return null;
   
+    let rollTable = background.rollTable;
+    if (typeof rollTable === 'object' && !Array.isArray(rollTable)) {
+      rollTable = rollTable[race] || [];
+    }
+  
     return {
       abilityAdjustments: background.abilityAdjustments,
-      focuses: background.focuses,
-      focusOptions: background.focusOptions, // This should be an array of focus names
+      focusOptions: background.focusOptions,
       languages: background.languages,
       allowedClasses: background.allowedClasses,
-      equipment: background.equipment,
-      rollTable: background.rollTable.map(item => ({
-        ...item,
-        result: typeof item.result === 'object' 
-          ? `Focus: ${item.result.ability} (${item.result.focus})`
-          : item.result
-      }))
+      rollTable: rollTable
     };
   };
 
@@ -197,38 +155,14 @@ Template for adding new backgrounds:
   allowedClasses: [""],
   races: [""].
   rollTable: [
-          { 
-            roll: "2", 
-            result: "" 
-          },
-          { 
-            roll: "3-4", 
-            result: "" 
-          },
-          { 
-            roll: "5", 
-            result: "" 
-          },
-          { 
-            roll: "6", 
-            result: "" 
-          },
-          { 
-            roll: "7-8", 
-            result: "" 
-          },
-          { 
-            roll: "9", 
-            result: "" 
-          },
-          { 
-            roll: "10-11", 
-            result: "" 
-          },
-          { 
-            roll: "12", 
-            result: "" 
-          }
+    { roll: "2", result: "+1 Ability" },
+    { roll: "3-4", result: getFocusData("Focus") },
+    { roll: "5", result: getFocusData("Focus") },
+    { roll: "6", result: getFocusData("Focus") },
+    { roll: "7-8", result: "+1 Ability" },
+    { roll: "9", result: getFocusData("Focus") },
+    { roll: "10-11", result: getFocusData("Focus") },
+    { roll: "12", result: "+1 Ability" }
   ]
 }
 */
