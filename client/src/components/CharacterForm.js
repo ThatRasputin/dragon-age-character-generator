@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { backgrounds } from '../data/backgroundData';
+import { backgrounds, getBackgroundBenefits } from '../data/backgroundData';
+import { focusData } from '../data/focusData';
 import CharacterSummary from './CharacterSummary';
 import AbilitiesDisplay from './AbilitiesDisplay';
 import BiographyTab from './BiographyTab';
@@ -34,6 +35,7 @@ function CharacterForm() {
     languages: [],
   });
   const [incompatibleWarning, setIncompatibleWarning] = useState('');
+  const [backgroundBenefits, setBackgroundBenefits] = useState(null);
 
   const updateAbilities = useCallback(() => {
     const newAbilities = {
@@ -62,14 +64,17 @@ function CharacterForm() {
   }, [updateAbilities]);
 
   useEffect(() => {
-    if (character.background && character.class) {
-      const backgroundData = backgrounds.find(bg => bg.name === character.background);
-      if (backgroundData && !backgroundData.allowedClasses.includes(character.class)) {
+    if (character.background) {
+      const benefits = getBackgroundBenefits(character.background);
+      setBackgroundBenefits(benefits);
+
+      if (character.class && benefits && !benefits.allowedClasses.includes(character.class)) {
         setIncompatibleWarning(`Note: ${character.background} does not typically allow the ${character.class} class.`);
       } else {
         setIncompatibleWarning('');
       }
     } else {
+      setBackgroundBenefits(null);
       setIncompatibleWarning('');
     }
   }, [character.background, character.class]);
@@ -88,7 +93,7 @@ function CharacterForm() {
             focus: '',
             focuses: selectedBackground.focuses || [],
             languages: selectedBackground.languages || [],
-            race: selectedBackground.races.length === 1 ? selectedBackground.races[0] : '',
+            race: selectedBackground.races && selectedBackground.races.length === 1 ? selectedBackground.races[0] : '',
           };
         }
       }
@@ -97,40 +102,52 @@ function CharacterForm() {
     });
   };
 
+  const handleFocusChange = (focusName) => {
+    setCharacter(prevState => ({
+      ...prevState,
+      focus: focusName
+    }));
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log(character);
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div className="character-info">
+    <form onSubmit={handleSubmit} className="character-form">
+      <div className="sidebar">
         <CharacterSummary character={character} />
-        <AbilitiesDisplay abilities={character.abilities} />
+        <AbilitiesDisplay abilities={character.abilities} focuses={character.focuses} focusData={focusData} />
       </div>
-      <TabNavigation activeTab={activeTab} setActiveTab={setActiveTab} />
-      <div className="tab-content">
+      <div className="main-content">
+        <TabNavigation activeTab={activeTab} setActiveTab={setActiveTab} />
+        <div className="tab-content">
         {activeTab === 'background' && (
           <BackgroundTab 
             character={character} 
             handleInputChange={handleInputChange}
+            handleFocusChange={handleFocusChange}
             incompatibleWarning={incompatibleWarning}
+            backgroundBenefits={backgroundBenefits}
+            focusData={focusData}
           />
         )}
-        {activeTab === 'class' && (
-          <ClassTab 
-            character={character} 
-            handleInputChange={handleInputChange}
-            incompatibleWarning={incompatibleWarning}
-          />
-        )}
-        {activeTab === 'biography' && (
-          <BiographyTab 
-            character={character} 
-            handleInputChange={handleInputChange} 
-          />
-        )}
-        {activeTab === 'review' && <ReviewTab character={character} />}
+          {activeTab === 'class' && (
+            <ClassTab 
+              character={character} 
+              handleInputChange={handleInputChange}
+              incompatibleWarning={incompatibleWarning}
+            />
+          )}
+          {activeTab === 'biography' && (
+            <BiographyTab 
+              character={character} 
+              handleInputChange={handleInputChange} 
+            />
+          )}
+          {activeTab === 'review' && <ReviewTab character={character} />}
+        </div>
       </div>
     </form>
   );

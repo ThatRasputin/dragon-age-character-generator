@@ -1,3 +1,5 @@
+import { getFocusData } from './focusData';
+
 export const backgrounds = [
     {
         name: "Ander Survivor",
@@ -5,10 +7,7 @@ export const backgrounds = [
         abilityAdjustments: {
           constitution: 1
         },
-        focusOptions: [
-          "Constitution (Stamina)",
-          "Strength (Climbing)"
-        ],
+        focusOptions: ['Stamina', 'Climbing'],
         languages: ["Ander", "Trade Tongue"],
         allowedClasses: ["Rogue", "Warrior"],
         races: ["Human"],
@@ -19,15 +18,15 @@ export const backgrounds = [
           },
           { 
             roll: "3-4", 
-            result: "Focus: Constitution (Running)" 
+            result: getFocusData("Running")
           },
           { 
             roll: "5", 
-            result: "Focus: Cunning (Historical Lore)" 
+            result: getFocusData("Historical Lore")
           },
           { 
             roll: "6", 
-            result: "Focus: Perception (Tracking)" 
+            result: getFocusData("Tracking") 
           },
           { 
             roll: "7-8", 
@@ -35,11 +34,11 @@ export const backgrounds = [
           },
           { 
             roll: "9", 
-            result: "Focus: Dexterity (Brawling)" 
+            result: getFocusData("Brawling") 
           },
           { 
             roll: "10-11", 
-            result: "Focus: Willpower (Courage)" 
+            result: getFocusData("Courage") 
           },
           { 
             roll: "12", 
@@ -67,15 +66,15 @@ export const backgrounds = [
           },
           { 
             roll: "3-4", 
-            result: "Focus: Cunning (Historical Lore)" 
+            result: getFocusData("Historical Lore")
           },
           { 
             roll: "5", 
-            result: "Focus: Strength (Might)" 
+            result: getFocusData("Might")
           },
           { 
             roll: "6", 
-            result: "Focus: Constitution (Stamina)" 
+            result: getFocusData("Stamina")
           },
           { 
             roll: "7-8", 
@@ -83,11 +82,11 @@ export const backgrounds = [
           },
           { 
             roll: "9", 
-            result: "Focus: Communication (Persuasion)" 
+            result: getFocusData("Persuasion")
           },
           { 
             roll: "10-11", 
-            result: "Focus: Perception (Empathy)" 
+            result: getFocusData("Empathy")
           },
           { 
             roll: "12", 
@@ -161,11 +160,16 @@ export const backgrounds = [
     return {
       abilityAdjustments: background.abilityAdjustments,
       focuses: background.focuses,
-      focusOptions: background.focusOptions,
+      focusOptions: background.focusOptions, // This should be an array of focus names
       languages: background.languages,
       allowedClasses: background.allowedClasses,
       equipment: background.equipment,
-      rollTable: background.rollTable
+      rollTable: background.rollTable.map(item => ({
+        ...item,
+        result: typeof item.result === 'object' 
+          ? `Focus: ${item.result.ability} (${item.result.focus})`
+          : item.result
+      }))
     };
   };
 
