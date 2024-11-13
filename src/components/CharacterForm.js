@@ -8,174 +8,154 @@ import BackgroundTab from './BackgroundTab';
 import ClassTab from './ClassTab';
 import ReviewTab from './ReviewTab';
 import TabNavigation from './TabNav';
-import '../styles/CharacterForm.css';
+import '../styles/App.css';
+import { runTestCase } from '../testing/UnitTesting';
+import { testCase01 } from '../testing/TestCases';
 
 function CharacterForm() {
-  const [activeTab, setActiveTab] = useState('background');
-  const [character, setCharacter] = useState({
-    name: '',
-    pronouns: '',
-    genderIdentity: '',
-    genderPresentation: '',
-    background: '',
-    race: '',
-    class: '',
-    focus: '',
-    abilities: {
-      strength: 0,
-      dexterity: 0,
-      constitution: 0,
-      magic: 0,
-      perception: 0,
-      willpower: 0,
-      communication: 0,
-      cunning: 0
-    },
-    focuses: [],
-    languages: [],
-  });
-  const [incompatibleWarning, setIncompatibleWarning] = useState('');
-  const [backgroundBenefits, setBackgroundBenefits] = useState(null);
-  const [availableRaces, setAvailableRaces] = useState([]);
-
-  const updateAbilities = useCallback(() => {
-    const newAbilities = {
-      strength: 0,
-      dexterity: 0,
-      constitution: 0,
-      magic: 0,
-      perception: 0,
-      willpower: 0,
-      communication: 0,
-      cunning: 0
-    };
-    if (character.background) {
-      const backgroundData = backgrounds.find(bg => bg.name === character.background);
-      if (backgroundData && backgroundData.abilityAdjustments) {
-        Object.entries(backgroundData.abilityAdjustments).forEach(([ability, adjustment]) => {
-          newAbilities[ability] += adjustment;
-        });
-      }
-    }
-    setCharacter(prevState => ({...prevState, abilities: newAbilities}));
-  }, [character.background]);
-
-  useEffect(() => {
-    updateAbilities();
-  }, [updateAbilities]);
-
-  useEffect(() => {
-    if (character.background) {
-      const benefits = getBackgroundBenefits(character.background, character.race);
-      setBackgroundBenefits(benefits);
-
-      if (character.class && benefits && !benefits.allowedClasses.includes(character.class)) {
-        setIncompatibleWarning(`Note: ${character.background} does not typically allow the ${character.class} class.`);
-      } else {
-        setIncompatibleWarning('');
-      }
-
-      const selectedBackground = backgrounds.find(bg => bg.name === character.background);
-      if (selectedBackground && selectedBackground.races) {
-        setAvailableRaces(selectedBackground.races);
-      } else {
-        setAvailableRaces([]);
-      }
-    } else {
-      setBackgroundBenefits(null);
-      setIncompatibleWarning('');
-      setAvailableRaces([]);
-    }
-  }, [character.background, character.class, character.race]);
-
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setCharacter(prevState => {
-      let newState = { ...prevState, [name]: value };
-  
-      if (name === 'background') {
-        const selectedBackground = backgrounds.find(bg => bg.name === value);
-        if (selectedBackground) {
-          newState = {
-            ...newState,
-            class: '',
-            focus: '',
-            focuses: selectedBackground.focuses || [],
-            languages: selectedBackground.languages || [],
-            race: selectedBackground.races && selectedBackground.races.length === 1 ? selectedBackground.races[0] : '',
-          };
-        }
-      }
-
-      if (name === 'race') {
-        // Reset background if the new race is not compatible with the current background
-        const currentBackground = backgrounds.find(bg => bg.name === newState.background);
-        if (currentBackground && !currentBackground.races.includes(value)) {
-          newState = {
-            ...newState,
-            background: '',
-            class: '',
-            focus: '',
-            focuses: [],
-            languages: [],
-          };
-        }
-      }
-  
-      return newState;
+    const [activeTab, setActiveTab] = useState('background');
+    const [character, setCharacter] = useState({
+        name: '',
+        pronouns: '',
+        genderIdentity: '',
+        genderPresentation: '',
+        background: '',
+        race: '',
+        class: '',
+        focus: '',
+        abilities: {
+            strength: 0,
+            dexterity: 0,
+            constitution: 0,
+            magic: 0,
+            perception: 0,
+            willpower: 0,
+            communication: 0,
+            cunning: 0
+        },
+        focuses: [],
+        languages: []
     });
-  };
 
-  const handleFocusChange = (focusName) => {
-    setCharacter(prevState => ({
-      ...prevState,
-      focus: focusName
-    }));
-  };
+    const [incompatibleWarning, setIncompatibleWarning] = useState('');
+    const [backgroundBenefits, setBackgroundBenefits] = useState(null);
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log(character);
-  };
+    const updateAbilities = useCallback(() => {
+        const newAbilities = {
+            strength: 0, dexterity: 0, constitution: 0, magic: 0,
+            perception: 0, willpower: 0, communication: 0, cunning: 0
+        };
 
-  return (
-    <form onSubmit={handleSubmit} className="character-form">
-      <div className="sidebar">
-        <CharacterSummary character={character} />
-        <AbilitiesDisplay abilities={character.abilities} focuses={character.focuses} focusData={focusData} />
-      </div>
-      <div className="main-content">
-        <TabNavigation activeTab={activeTab} setActiveTab={setActiveTab} />
-        <div className="tab-content">
-          {activeTab === 'background' && (
-            <BackgroundTab 
-              character={character} 
-              handleInputChange={handleInputChange}
-              handleFocusChange={handleFocusChange}
-              incompatibleWarning={incompatibleWarning}
-              backgroundBenefits={backgroundBenefits}
-              focusData={focusData}
-              availableRaces={availableRaces}
-            />
-          )}
-          {activeTab === 'class' && (
-            <ClassTab 
-              character={character} 
-              handleInputChange={handleInputChange}
-              incompatibleWarning={incompatibleWarning}
-            />
-          )}
-          {activeTab === 'biography' && (
-            <BiographyTab 
-              character={character} 
-              handleInputChange={handleInputChange} 
-            />
-          )}
-          {activeTab === 'review' && <ReviewTab character={character} />}
+        if (character.background) {
+            const backgroundData = backgrounds.find(bg => bg.name === character.background);
+            if (backgroundData && backgroundData.abilityAdjustments) {
+                Object.entries(backgroundData.abilityAdjustments).forEach(([ability, adjustment]) => {
+                    newAbilities[ability] += adjustment;
+                });
+            }
+        }
+
+        setCharacter(prevState => ({
+            ...prevState,
+            abilities: newAbilities
+        }));
+    }, [character.background]);
+
+    useEffect(() => {
+        updateAbilities();
+    }, [updateAbilities]);
+
+    useEffect(() => {
+        /* This effect intentionally depends only on character.background and character.race
+        |  rather than the entire character object. This prevents unnecessary re-renders
+        |  when other properties of character change, as this effect only needs to run
+        |  when the background or race is updated. The ESLint warning is acknowledged
+        |  but ignored for performance reasons.
+        */
+      
+        console.warn("Effect triggered in CharacterForm");
+        console.warn("Character:", character);
+        
+        if (character.background) {
+          console.warn("Getting benefits for:", character.background, character.race);
+          const benefits = getBackgroundBenefits(character.background, character.race);
+          console.warn("Retrieved background benefits:", benefits);
+          
+          if (benefits) {
+            setBackgroundBenefits(benefits);
+          } else {
+            console.error("Benefits are null or undefined");
+            setBackgroundBenefits(null);
+          }
+        } else {
+          console.warn("No background selected, setting benefits to null");
+          setBackgroundBenefits(null);
+        }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      }, [character.background, character.race]);
+
+      const handleInputChange = (event) => {
+        const { name, value } = event.target;
+        console.warn(`Changing ${name} to ${value}`);
+        setCharacter(prevState => ({
+          ...prevState,
+          [name]: value
+        }));
+      };
+
+    const handleFocusChange = (focusName) => {
+        setCharacter(prevState => ({
+            ...prevState,
+            focus: focusName
+        }));
+    };
+
+    // Function to run a test case
+    const runTest = (testCase) => {
+        runTestCase(testCase, setCharacter, handleInputChange);
+    };
+
+    return (
+        <div className="character-form">
+            <div className="sidebar">
+                <CharacterSummary character={character} />
+                <AbilitiesDisplay abilities={character.abilities} focuses={character.focuses} focusData={focusData} />
+            </div>
+            <div className="main-content">
+                <TabNavigation activeTab={activeTab} setActiveTab={setActiveTab} />
+                <div className="tab-content">
+                    {activeTab === 'background' && (
+                        <BackgroundTab
+                            character={character}
+                            handleInputChange={handleInputChange}
+                            handleFocusChange={handleFocusChange}
+                            incompatibleWarning={incompatibleWarning}
+                            backgroundBenefits={backgroundBenefits}
+                            focusData={focusData}
+                        />
+                    )}
+                    {activeTab === 'class' && (
+                        <ClassTab
+                            character={character}
+                            handleInputChange={handleInputChange}
+                            incompatibleWarning={incompatibleWarning}
+                        />
+                    )}
+                    {activeTab === 'biography' && (
+                        <BiographyTab
+                            character={character}
+                            handleInputChange={handleInputChange}
+                        />
+                    )}
+                    {activeTab === 'review' && (
+                        <ReviewTab character={character} />
+                    )}
+                </div>
+            </div>
+            {/* Add a button for running the test case */}
+            <button onClick={() => runTest(testCase01)}>Run Test Case 01</button>
         </div>
-      </div>
-    </form>
-  );
+    );
 }
 
 export default CharacterForm;

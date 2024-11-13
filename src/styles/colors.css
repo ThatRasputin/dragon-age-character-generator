@@ -1,0 +1,138 @@
+/* colors.css */
+
+:root {
+    /* Base Dragon Age inspired colors */
+    --deep-red: #6b0606;
+    --gold: #C6A875;
+    --bronze: #a98565;
+    --faded-green: #5C715E;
+    --everknit-green: #228B22;
+    --dark-grey: #121212;
+    --light-grey: #8d8d8d;
+    --faded-parchment: #f5f2ed;
+    --cream: #FFFDD0;
+    --orlesian-blue: #4169E1;
+    --lyrium-blue: #4682B4;
+    --white: #FFFFFF;
+    --semi-transparent-white: #CCFFFF;
+    --black: #000000;
+
+    /* Light mode colors */
+    --light-bg-primary: var(--faded-parchment);
+    --light-bg-secondary: var(--light-grey);
+    --light-text-primary: var(--dark-grey);
+    --light-text-secondary: var(--deep-red);
+    --light-accent-primary: var(--deep-red);
+    --light-accent-secondary: var(--dark-grey);
+    --light-button: var(--deep-red);
+    --light-button-hover: var(--lyrium-blue);
+    --light-button-text: var(--white);
+    --light-input-fill: var(--white);
+    --light-input-text: var(--dark-grey);
+    --light-placeholder-color: #767676;
+
+    /* Dark mode colors */
+    --dark-bg-primary: var(--dark-grey);
+    --dark-bg-secondary: var(--black);
+    --dark-text-primary: var(--faded-parchment);
+    --dark-text-secondary: var(--gold);
+    --dark-accent-primary: var(--gold);
+    --dark-accent-secondary: var(--light-grey);
+    --dark-button: var(--deep-red);
+    --dark-button-hover: var(--lyrium-blue);
+    --dark-button-text: var(--white);
+    --dark-input-fill: var(--light-grey);
+    --dark-input-text: var(--black);
+    --dark-placeholder-color: var(--dark-grey);
+}
+
+body {
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Light mode styles */
+body.light-mode {
+    --bg-primary: var(--light-bg-primary);
+    --bg-secondary: var(--light-bg-secondary);
+    --text-primary: var(--light-text-primary);
+    --text-secondary: var(--light-text-secondary);
+    --accent-primary: var(--light-accent-primary);
+    --accent-secondary: var(--light-accent-secondary);
+    --button: var(--light-button);
+    --button-hover: var(--light-button-hover);
+    --button-text: var(--light-button-text);
+    --input-fill: var(--light-input-fill);
+    --input-text: var(--light-input-text);
+    --placeholder-color: var(--light-placeholder-color);
+}
+
+/* Dark mode styles */
+body.dark-mode {
+    --bg-primary: var(--dark-bg-primary);
+    --bg-secondary: var(--dark-bg-secondary);
+    --text-primary: var(--dark-text-primary);
+    --text-secondary: var(--dark-text-secondary);
+    --accent-primary: var(--dark-accent-primary);
+    --accent-secondary: var(--dark-accent-secondary);
+    --button: var(--dark-button);
+    --button-hover: var(--dark-button-hover);
+    --button-text: var(--dark-button-text);
+    --input-fill: var(--dark-input-fill);
+    --input-text: var(--dark-input-text);
+    --placeholder-color: var(--dark-placeholder-color);
+}
+
+/* Common styles using CSS variables */
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+.App-header {
+    background-color: var(--deep-red);
+    color: var(--faded-parchment);
+}
+
+button {
+    background-color: var(--button);
+    color: var(--button-text);
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: var(--button-hover);
+}
+
+a {
+    color: var(--accent-secondary);
+}
+
+input, select {
+    background-color: var(--input-fill);
+    color: var(--input-text);
+    border: 1px solid var(--accent-secondary);
+}
+
+.light-bg {
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+}
+
+.dark-bg {
+    background-color: var(--accent-secondary);
+    color: var(--bg-primary);
+}
+
+/* Placeholder text styles */
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: var(--placeholder-color);
+    opacity: 1; /* Firefox */
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: var(--placeholder-color);
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+    color: var(--placeholder-color);
+}
