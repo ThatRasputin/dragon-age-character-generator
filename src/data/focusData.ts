@@ -1,4 +1,14 @@
-export const focusData = {
+// focusData.ts
+
+interface FocusInfo {
+    ability: string;
+  }
+  
+  export interface FocusData {
+    [key: string]: FocusInfo;
+  }
+  
+  export const focusData: FocusData = {
     'Arcane Lance': { ability: 'Magic' },
     'Brawling': { ability: 'Dexterity' },
     'Climbing': { ability: 'Strength' },
@@ -16,18 +26,22 @@ export const focusData = {
     'Stamina': { ability: 'Constitution' },
     'Stealth': { ability: 'Dexterity' },
     'Tracking': { ability: 'Perception' }
-};
-
-export const getFocusData = (focusName) => {
+  };
+  
+  export function getFocusData(focusName: string): { focus: string; ability: string } | string {
     if (focusName in focusData) {
-        return {
-            focus: focusName,
-            ability: focusData[focusName].ability
-        };
+      return {
+        focus: focusName,
+        ability: focusData[focusName].ability
+      };
     }
     return "That focus is not in the standard list.";
-};
-
-export const getCustomFocusKey = (focus, ability) => `custom_${focus.toLowerCase().replace(/\s+/g, '_')}_${ability}`;
-
-export const isCustomFocus = (focusKey) => focusKey.startsWith('custom_');
+  }
+  
+  export function getCustomFocusKey(focus: string, ability: string): string {
+    return `custom_${focus.toLowerCase().replace(/\s+/g, '_')}_${ability}`;
+  }
+  
+  export function isCustomFocus(focusKey: string): boolean {
+    return focusKey.startsWith('custom_');
+  }

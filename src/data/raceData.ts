@@ -1,3 +1,8 @@
+interface races {
+  name: string;
+  baseSpeed: number;
+}
+
 export const races = [
     {
       name: "Dwarf",
