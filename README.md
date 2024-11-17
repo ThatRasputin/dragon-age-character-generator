@@ -1,70 +1,74 @@
-# Getting Started with Create React App
+# Dragon AGE Character Builder
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Description
 
-## Available Scripts
+Dragon AGE Character Builder is a web application that guides users through creating characters for Green Ronin's Dragon AGE tabletop RPG. Built with React and TypeScript, this app streamlines the character creation process, making it more accessible and enjoyable for players.
 
-In the project directory, you can run:
+## Features
 
-### `npm start`
+- Intuitive step-by-step character creation process
+- Dynamic ability score calculation
+- Background and class selection with detailed information
+- Responsive design for desktop and mobile use
+- Built with modern web technologies (React, TypeScript)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Prerequisites
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Before you begin, ensure you have the following installed:
+- Node.js (v14.0.0 or later)
+- Yarn package manager
 
-### `npm test`
+## Installation
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. Clone the repository:
+   `bash`
+   `git clone https://github.com/your-username/dragon-age-character-builder.git`
 
-### `npm run build`
+2. Navigate to the project directory:
+   `bash`
+   `cd dragon-age-character-builder`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+3. Install dependencies:
+   `bash`
+   `yarn install`
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Running the Application
 
-### `npm run eject`
+To start the development server:
+    `bash`
+    `yarn start`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Project Structure
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+dragon-age-character-builder/
+├── src/
+│ ├── components/
+│ │ ├── AbilitiesDisplay.tsx
+│ │ ├── BackgroundTab.tsx
+│ │ ├── BiographyTab.tsx
+│ │ ├── CharacterForm.tsx
+│ │ ├── CharacterSummary.tsx
+│ │ ├── ClassTab.tsx
+│ │ ├── DarkModeToggle.tsx
+│ │ ├── EquipmentTab.tsx
+│ │ ├── SettingsModal.tsx
+│ │ ├── TabNav.tsx
+│ │ └── Utils.ts
+│ ├── data/
+│ │ ├── abilityRolls.ts
+│ │ ├── backgroundData.ts
+│ │ ├── classData.ts
+│ │ ├── focusData.ts
+│ │ ├── powersData.ts
+│ │ └── raceData.ts
+│ ├── styles/
+│ │ ├── App.css
+│ │ ├── colors.css
+│ │ └── modal.css
+│ ├── App.tsx
+│ └── index.tsx
+├── public/
+├── package.json
+├── tsconfig.json
+└── README.md
