@@ -41,6 +41,7 @@ To start the development server:
 
 ## Project Structure
 
+```
 dragon-age-character-builder/
 ├── src/
 │ ├── components/
@@ -72,3 +73,4 @@ dragon-age-character-builder/
 ├── package.json
 ├── tsconfig.json
 └── README.md
+```
