@@ -21,23 +21,31 @@ Before you begin, ensure you have the following installed:
 ## Installation
 
 1. Clone the repository:
-   `bash`
-   `git clone https://github.com/your-username/dragon-age-character-builder.git`
+   ```
+   bash
+   git clone https://github.com/your-username/dragon-age-character-builder.git
+   ```
 
 2. Navigate to the project directory:
-   `bash`
-   `cd dragon-age-character-builder`
+   ```
+   bash
+   cd dragon-age-character-builder
+   ```
 
 3. Install dependencies:
-   `bash`
-   `yarn install`
+   ```
+   bash
+   yarn install
+   ```
 
 
 ## Running the Application
 
 To start the development server:
-    `bash`
-    `yarn start`
+    ```
+    bash
+    yarn start
+    ```
 
 ## Project Structure
 
